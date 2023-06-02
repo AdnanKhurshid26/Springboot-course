@@ -1,10 +1,10 @@
-package com.adnan.todoapp;
+package com.adnan.todowebapp;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class TodoAppApplicationTests {
+class TodoWebappApplicationTests {
 
 	@Test
 	void contextLoads() {
