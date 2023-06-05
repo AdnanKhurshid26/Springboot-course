@@ -2,20 +2,33 @@ package com.adnan.todowebapp.todo;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+
+@Entity
 public class Todo {
+    @Id
+    @GeneratedValue
     private int id;
+
+   
     private String username;
     private String description;
     private LocalDate targetDate;
-    private boolean isDone;
+    private String done;
     
-    public Todo(int id, String username, String description, LocalDate targetDate, boolean isDone) {
+    public Todo() {
         super();
-        this.id = id;
+    }
+
+
+    public Todo(String username, String description, LocalDate targetDate, String done) {
+        super();
         this.username = username;
         this.description = description;
         this.targetDate = targetDate;
-        this.isDone = isDone;
+        this.done = done;
     }
 
     public int getId() {
@@ -25,6 +38,8 @@ public class Todo {
     public void setId(int id) {
         this.id = id;
     }
+
+   
 
     public String getUsername() {
         return username;
@@ -50,20 +65,19 @@ public class Todo {
         this.targetDate = targetDate;
     }
 
-    public boolean isDone() {
-        return isDone;
+    public String getDone() {
+        return done;
     }
 
-    public void setDone(boolean isDone) {
-        this.isDone = isDone;
+    public void setDone(String done) {
+        this.done = done;
     }
 
     @Override
     public String toString() {
         return "Todo [id=" + id + ", username=" + username + ", description=" + description + ", targetDate="
-                + targetDate + ", isDone=" + isDone + "]";
+                + targetDate + ", done=" + done + "]";
     }
-
     
 
 }

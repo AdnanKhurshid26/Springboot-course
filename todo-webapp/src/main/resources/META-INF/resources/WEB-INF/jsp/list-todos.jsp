@@ -1,29 +1,71 @@
 <!DOCTYPE html>
 
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
+<!DOCTYPE html>
 
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="webjars/bootstrap/5.1.3/bootstrap.min.css">
-    <title>Todo List</title>
-</head>
-<body>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-    <div class="container">
-        <h1> Welcome ${name}</h1>
-        <div>Your Todos are</div>
-        <button class="btn-primary">Hello</button>
-         <c:forEach items="${todos}" var="todo">
-              <div>${todo}</div>
-         </c:forEach>
-    </div>
+    <html lang="en">
 
-   
+    <head>
+       <%@include file="common/header.jspf" %>
+        <title>My Todo List</title>
+    </head>
 
-    <script src="webjars/bootstrap/5.1.3/js/bootstrap.min.js"></script>
-    <script src="webjars/jquery/3.6.0/jquery.min.js"></script>
-</body>
-</html>
+    <body>
+        <%@include file="common/navbar.jspf" %>
+        <div class="container">
+            <h1>Welcome ${name}</h1>
+            <h2>Your Todos are</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Target Date</th>
+                        <th>Is Done?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:if test="${ empty todos}">
+                        <tr>
+                            <td colspan="4">No Todos Found</td>
+                        </tr>
+                    </c:if>
+                    <c:forEach items="${todos}" var="todo">
+                        <tr>
+                            <th scope="row">${todo.id}</th>
+                            <td>${todo.description}</td>
+                            <td>${todo.targetDate}</td>
+                            <td>
+                                ${todo.done}
+                            </td>
+                            <td>
+                                <div style="display: flex; gap: 20px;">
+
+                                    <c:if test="${todo.done eq 'No'}">
+                                        <form action="/mark-done" method="POST">
+                                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                            <input type="number" name="id" id="id" value="${todo.id}" hidden>
+                                            <button type="submit" class="btn btn-success">Mark as Done</button>
+                                        </form>
+                                      </c:if>
+                                    <form action="/delete" method="POST">
+                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                        <input type="number" name="id" id="id" value="${todo.id}" hidden>
+                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                    </form>
+                                </div>
+                                
+                            </td>
+                           
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+
+            <a href="/add-todo" class="btn btn-primary">Add Todo</a>
+
+        </div>
+
+
+        <%@include file="common/footer.jspf" %>
